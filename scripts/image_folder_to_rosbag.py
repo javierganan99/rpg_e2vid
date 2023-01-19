@@ -12,10 +12,13 @@ import glob
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--datasets", default='dynamic_6dof', type=lambda s: [str(item) for item in s.split(',')],
+    parser.add_argument("--datasets", default='reconstruction', type=lambda s: [str(item) for item in s.split(',')],
                         help="Delimited list of datasets")
     parser.add_argument("--image_folder", required=True,
                         type=str, help="Path to the base folder containing the image reconstructions")
+    # Added to name the bag the same but reconstructed
+    parser.add_argument("--name", default='reconstruction',
+                        type=str, help="Name of the output bag")
     parser.add_argument("--output_folder", default='.',
                         type=str, help="Path to the output folder")
     parser.add_argument("--image_topic", required=True, type=str,
@@ -39,7 +42,7 @@ if __name__ == "__main__":
             os.makedirs(args.output_folder)
 
         output_bag_filename = join(
-            args.output_folder, '{}.bag'.format(dataset))
+            args.output_folder, '{}.bag'.format(args.name))
 
         if continue_processing:
             # Write the images to a rosbag
@@ -69,5 +72,5 @@ if __name__ == "__main__":
                         outbag.write(args.image_topic, img_msg,
                                      img_msg.header.stamp)
 
-                    except CvBridgeError as e:
-                        print(e)
+                    except CvBridgeError:
+                        print("CvBridgeError")

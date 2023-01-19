@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import argparse
 import rosbag
@@ -79,7 +79,7 @@ if __name__ == "__main__":
             # Look for the topics that are available and save the total number of messages for each topic (useful for the progress bar)
             total_num_event_msgs = 0
             topics = bag.get_type_and_topic_info().topics
-            for topic_name, topic_info in topics.iteritems():
+            for topic_name, topic_info in topics.items(): #iteritems in python2
                 if topic_name == args.event_topic:
                     total_num_event_msgs = topic_info.message_count
                     print('Found events topic: {} with {} messages'.format(topic_name, topic_info.message_count))
