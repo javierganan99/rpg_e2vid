@@ -69,5 +69,5 @@ if __name__ == "__main__":
                         outbag.write(args.image_topic, img_msg,
                                      img_msg.header.stamp)
 
-                    except CvBridgeError, e:
-                        print e
+                    except CvBridgeError as e:
+                        print(e)
